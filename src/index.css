@@ -116,7 +116,11 @@ box-shadow: 0 2px 4px #d80c6c;
 
 .editor {
   padding: 10px;
-  min-height: 250px;
+  max-height: 400px;
+}
+
+.editor::-webkit-scrollbar {
+  display: none;
 }
 
 .main_loader {

@@ -17,10 +17,14 @@ const AppInput = (props) => {
                 <div className="relative">
                     {show ? <img
                         onClick={toggleVisibility}
+                        width={20}
+                        height={20}
                         className="absolute cursor-pointer right-5 top-[-38px]"
                         src={hidden}
                         alt="hidden"
                     /> : <img
+                    width={20}
+                    height={20}
                         onClick={toggleVisibility}
                         className="absolute cursor-pointer right-5 top-[-38px] w-[20px] h-[20px]"
                         src={open}

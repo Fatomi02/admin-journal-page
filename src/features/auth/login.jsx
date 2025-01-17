@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import api from "../../api/api";
+import logo from '../../assets/logos/ACTA-BIOSCIENTA.png'
 import AppInput from "../../components/AppInput";
 import AppBtn from "../../components/AppBtn";
 import { toast } from "react-toastify";
@@ -40,7 +41,8 @@ const LogIn = () => {
       <div className="hidden bg-primary w-1/2 lg:flex h-screen justify-center items-center">
         <img className="xl:h-[60vh] xl:w-[550px] rounded-2xl" src={loginBanner} alt="home-banner" />
       </div>
-      <div className="flex justify-center lg:w-1/2 w-full h-screen items-center bg-[#f5f5f5]">
+      <div className="flex flex-col gap-4 justify-center lg:w-1/2 w-full h-screen items-center bg-[#f5f5f5]">
+        <img width={100} height={100} src={logo} alt="" />
         <div className="flex flex-col gap-8 w-[90%] lg:w-auto">
           <h1 className="lg:text-[50px] text-[40px] font-extrabold text-primary">Acta BioScientia</h1>
           <div className="flex flex-col gap-6 w-full lg:w-[400px] xl:w-[500px]">

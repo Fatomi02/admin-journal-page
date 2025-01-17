@@ -81,17 +81,17 @@ export default function Journals() {
 
     const openEdit = (data) => {
         setForm(data);
-        const contentState = convertFromRaw(JSON.parse(data.content));
-        setEditorState(EditorState.createWithContent(contentState));
         setIsEdit(true)
         setIsModalOpen(true);
+        const contentState = convertFromRaw(JSON.parse(data.content));
+        setEditorState(EditorState.createWithContent(contentState));
     }
 
     const openView = (data) => {
+        setIsView(true)
         setForm(data);
         const contentState = convertFromRaw(JSON.parse(data.content));
         setEditorState(EditorState.createWithContent(contentState));
-        setIsView(true)
     }
 
     const publish = (e) => {
@@ -232,8 +232,7 @@ export default function Journals() {
                         </div>
                         <div>
                             {journals.map((journal, index) => (
-                                <><div
-                                    key={journal._id}
+                                <div key={journal._id}><div
                                     className="grid grid-cols-5 md:grid-cols-7 gap-4 py-4 items-center px-4 rounded-lg hover:bg-partial-white cursor-pointer"
                                 >
                                     <div className="pr-4 w-full truncate capitalize flex col-span-4 md:col-span-3">
@@ -272,7 +271,7 @@ export default function Journals() {
                                     {index !== journals.length - 1 &&
                                         <div className="w-full h-[1px] bg-[#e5e5e5]"></div>
                                     }
-                                </>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -290,7 +289,7 @@ export default function Journals() {
                 )}
             </div>
             <Modal isOpen={isModalOpen}>
-                <form onSubmit={publish} className="lg:w-[900px] w-full flex flex-col gap-4">
+                <form onSubmit={publish} className="w-full lg:w-[900px] px-4 py-6 bg-white h-full lg:h-[80vh] overflow-y-scroll flex flex-col gap-4 lg:rounded-lg">
                     <AppInput label="Title" required type="text" onChange={handleChange} value={form.title} name="title" id="title"
                         placeholder="Enter journal title" />
                     <AppInput label="Volume" required type="number" onChange={handleChange} value={form.volume} name="volume" id="volume"
@@ -320,38 +319,38 @@ export default function Journals() {
                 </form>
             </Modal>
             <Modal isOpen={isDeleteModalOpen}>
-                <div class="w-[96%] lg:w-[600px] rounded-3xl bg-white py-10 px-8 flex items-center text-dark-grey text-center flex-col gap-6">
-                    <div class="w-[80px] h-[80px] bg-red-200 rounded-full flex items-center justify-center">
+                <div className="rounded-xl w-[98%] lg:w-[600px] bg-white py-5 px-4 flex items-center text-dark-grey text-center flex-col gap-6">
+                    <div className="w-[80px] h-[80px] bg-red-200 rounded-full flex items-center justify-center">
                         <img height="40" width="40" src={deleteIcon} alt="delete" />
                     </div>
                     Are you sure you want to delete this journal?. <br /> This action cannot be undone
-                    <div class="flex justify-end items-center gap-4">
+                    <div className="flex justify-end items-center gap-4">
                         <AppBtn onClick={() => setIsDeleteModalOpen(false)} variant="outline">Cancel</AppBtn>
                         <AppBtn onClick={() => deleteJournal()} variant="danger">Delete</AppBtn>
                     </div>
                 </div>
             </Modal>
             <Modal isOpen={isView}>
-                <div class="w-screen lg:w-[800px] h-screen lg:h-auto rounded-xl bg-white py-4 px-4 flex flex-col gap-6">
-                    <h2 class="text-xl font-medium text-primary">Journal Details</h2>
-                    <div class="flex flex-col gap-1">
+                <div className="lg:h-auto h-full overflow-y-scroll w-full lg:w-[800px] lg:rounded-lg bg-white px-4 py-6 flex flex-col gap-6">
+                    <h2 className="text-xl font-medium text-primary">Journal Details</h2>
+                    <div className="flex flex-col gap-1">
                         <h2 className="text-primary">Title</h2>
-                        <span class="capitalize">{form.title}</span>
+                        <span className="capitalize">{form.title}</span>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-                        <div class="flex flex-col gap-1">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Volume</h2>
                             <span>{form.volume}</span>
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Issue</h2>
-                            <span class="capitalize">{form.issue}</span>
+                            <span className="capitalize">{form.issue}</span>
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Journal Id</h2>
                             <span>{form._id}</span>
                         </div>
-                        <div class="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Date</h2>
                             <span>{new Date(form.date).toLocaleString("en-US", {
                                 month: "long",
@@ -360,11 +359,11 @@ export default function Journals() {
                             })}</span>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1">
                         <h2 className="text-primary">Content</h2>
-                        <span class="capitalize">{editorState.getCurrentContent().getPlainText()}</span>
+                        <span className="capitalize">{editorState.getCurrentContent().getPlainText()}</span>
                     </div>
-                    <div class="flex justify-end gap-4 mr-3">
+                    <div className="flex justify-end gap-4">
                         <AppBtn variant="primary" onClick={() => closeModal()}>Close</AppBtn>
                     </div>
                 </div>

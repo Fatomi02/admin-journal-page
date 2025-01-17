@@ -58,9 +58,8 @@ export default function Dashboard() {
                         </div>
                         <div>
                             {journals.map((journal, index) => (
-                                <>
+                                <div key={journal._id}>
                                 <div
-                                    key={index}
                                     className="grid grid-cols-4 md:grid-cols-6 gap-4 py-4 items-center px-4 rounded-lg hover:bg-partial-white cursor-pointer"
                                 >
                                     <div className="pr-4 w-full truncate capitalize flex col-span-4 md:col-span-3">
@@ -86,7 +85,7 @@ export default function Dashboard() {
                                 {index !== journals.length - 1 &&
                                         <div className="w-full h-[1px] bg-[#e5e5e5]"></div>
                                     }
-                                </>
+                                </div>
                             ))}
                         </div>
                     </div>

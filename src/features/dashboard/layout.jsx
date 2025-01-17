@@ -8,11 +8,11 @@ export default function Layout() {
         <div className="flex flex-col bg-light-grey h-screen w-full overflow-hidden lg:flex-row">
             <Sidenav />
             <div className="flex flex-col w-full h-full lg:h-screen overflow-scroll bg-light-grey">
-                <div className="w-full block">
+                <div className="w-full block h-full">
                     <div className="hidden lg:block">
                     <NavBar />
                     </div>
-                    <div className="lg:px-8 lg:py-6 pb-6 py-4 px-4 w-full">
+                    <div className="lg:px-8 lg:py-6 pb-6 py-4 px-4 w-full h-full">
                         <Outlet />
                     </div>
                 </div>

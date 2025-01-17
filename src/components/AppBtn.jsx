@@ -2,7 +2,7 @@ import React from "react";
 
 const AppBtn = (props) => {
   return (
-    <div className={props.isLoading ? 'w-[100px]' : ''}>
+    <div className={props.isLoading ? 'min-w-[100px]' : ''}>
       <button
         className={`${props.variant} py-3 px-4 flex items-center gap-1 justify-center relative text-center font-medium w-full rounded-[8px]`}
         type={props.type}
