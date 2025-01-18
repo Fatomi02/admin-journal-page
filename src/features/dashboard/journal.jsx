@@ -15,6 +15,7 @@ import { convertToRaw } from 'draft-js';
 import { toast } from "react-toastify";
 
 export default function Journals() {
+    const [mounted, setMounted] = useState(false);
     const [journals, setJournals] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
     const [isView, setIsView] = useState(false);
@@ -88,10 +89,19 @@ export default function Journals() {
     }
 
     const openView = (data) => {
-        setIsView(true)
+        setIsView(true);
         setForm(data);
-        const contentState = convertFromRaw(JSON.parse(data.content));
-        setEditorState(EditorState.createWithContent(contentState));
+        if (data?.content) {
+            try {
+                const contentState = convertFromRaw(JSON.parse(data.content));
+                setEditorState(EditorState.createWithContent(contentState));
+            } catch (error) {
+                console.error("Error parsing content:", error);
+            }
+        } else {
+            console.warn("Content is missing or empty.");
+            setEditorState(EditorState.createEmpty());
+        }
     }
 
     const publish = (e) => {
@@ -307,9 +317,11 @@ export default function Journals() {
                         editorState={editorState}
                         onEditorStateChange={handleEditorChange}
                         toolbar={{
-                            options: ['inline', 'list', 'textAlign', 'history'],
+                            options: ['inline', 'list', 'textAlign', 'history', 'fontSize', 'fontFamily'],
                             inline: { inDropdown: true, options: ['bold', 'italic', 'underline'] },
                             list: { inDropdown: true, options: ['unordered', 'ordered'] },
+                            fontSize: { inDropdown: true, options: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],},
+                            fontFamily: { inDropdown: true, options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],},
                         }}
                     />
                     <div className="w-full mt-10 flex gap-3 justify-end">
@@ -361,7 +373,11 @@ export default function Journals() {
                     </div>
                     <div className="flex flex-col gap-1">
                         <h2 className="text-primary">Content</h2>
-                        <span className="capitalize">{editorState.getCurrentContent().getPlainText()}</span>
+                        <Editor
+                            toolbarHidden={true}
+                            editorState={editorState}
+                            readOnly={true}
+                        />
                     </div>
                     <div className="flex justify-end gap-4">
                         <AppBtn variant="primary" onClick={() => closeModal()}>Close</AppBtn>
