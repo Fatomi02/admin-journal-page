@@ -343,7 +343,7 @@ export default function Journals() {
                 </div>
             </Modal>
             <Modal isOpen={isView}>
-                <div className="lg:h-auto h-full overflow-y-scroll w-full lg:w-[800px] lg:rounded-lg bg-white px-4 py-6 flex flex-col gap-6">
+                <div className="lg:h-[80vh] overflow-y-scroll h-full w-full lg:w-[800px] lg:rounded-lg bg-white px-4 py-6 flex flex-col gap-6">
                     <h2 className="text-xl font-medium text-primary">Journal Details</h2>
                     <div className="flex flex-col gap-1">
                         <h2 className="text-primary">Title</h2>
