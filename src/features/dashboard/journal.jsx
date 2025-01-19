@@ -349,7 +349,7 @@ export default function Journals() {
                         <h2 className="text-primary">Title</h2>
                         <span className="capitalize">{form.title}</span>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
                         <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Volume</h2>
                             <span>{form.volume}</span>
@@ -357,10 +357,6 @@ export default function Journals() {
                         <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Issue</h2>
                             <span className="capitalize">{form.issue}</span>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <h2 className="text-primary">Journal Id</h2>
-                            <span>{form._id}</span>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Date</h2>
