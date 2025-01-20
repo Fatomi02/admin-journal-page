@@ -308,7 +308,7 @@ export default function Journals() {
                         placeholder="Enter issue" />
                     {!isEdit && <AppInput label="File" required type="file" onChange={handleFileChange} name="file" id="file"
                         placeholder="Select file" />}
-                    <AppInput label="Page" required type="number" onChange={handleChange} value={form.page} name="page" id="page"
+                    <AppInput label="Page" required type="text" onChange={handleChange} value={form.page} name="page" id="page"
                         placeholder="Enter page" />
 
                     <Editor
@@ -317,7 +317,7 @@ export default function Journals() {
                         editorState={editorState}
                         onEditorStateChange={handleEditorChange}
                         toolbar={{
-                            options: ['inline', 'list', 'textAlign', 'history', 'fontSize', 'fontFamily'],
+                            options: ['inline', 'list', 'textAlign', 'history', 'fontSize', 'fontFamily',],
                             inline: { inDropdown: true, options: ['bold', 'italic', 'underline'] },
                             list: { inDropdown: true, options: ['unordered', 'ordered'] },
                             fontSize: { inDropdown: true, options: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],},
