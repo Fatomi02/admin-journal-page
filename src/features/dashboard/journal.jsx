@@ -13,6 +13,7 @@ import { convertFromRaw, EditorState } from 'draft-js';
 import api from "../../api/api";
 import { convertToRaw } from 'draft-js';
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function Journals() {
     const [journals, setJournals] = useState([]);
@@ -30,7 +31,7 @@ export default function Journals() {
         doi: '',
         page: '',
         date: '',
-        file: null
+        file: null,
     });
 
     useEffect(() => {
@@ -74,6 +75,7 @@ export default function Journals() {
             ...form,
             file: e.target.files[0]
         });
+        console.log(e.target.files[0])
     };
 
     const handleChange = (e) => {
@@ -82,7 +84,9 @@ export default function Journals() {
     };
 
     const openEdit = (data) => {
-        setForm(data);
+        let initial = data;
+        initial.date = initial.date.split('T')[0];
+        setForm(initial);
         setIsEdit(true)
         setIsModalOpen(true);
         const contentState = convertFromRaw(JSON.parse(data.content));
@@ -105,7 +109,7 @@ export default function Journals() {
         }
     }
 
-    const publish = (e) => {
+    const publish = async(e) => {
         e.preventDefault();
         setIsLoading(true);
 
@@ -135,18 +139,27 @@ export default function Journals() {
         formData.append("date", form.date);
         formData.append("content", content);
 
+        const uploads = new FormData();
         // Append file if it exists
-        if (form.file && !isEdit) {
-            formData.append("file", form.file);
+        if (form.file) {
+            formData.append("file", form.file.name);
+            uploads.append("file", form.file)
         } else {
             console.error("No file selected.");
         }
         if (!isEdit) {
-            postJournal(formData)
+            axios.post('https://actabioscientia.org/api/journal-file.php', uploads).then((res) => {
+                if(res.status === 200) {
+                    postJournal(formData);
+                }
+            }).catch((error) => {
+                console.error(error);
+                toast.error(error);
+            })
+
         } else {
             updateJournal(formData);
         }
-
     };
 
     const postJournal = (data) => {
@@ -169,6 +182,7 @@ export default function Journals() {
     }
 
     const updateJournal = (data) => {
+        console.log(data)
         api.put(`/api/journals/${form._id}`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -309,13 +323,14 @@ export default function Journals() {
                         placeholder="Enter volume" />
                     <AppInput label="Issue" required type="number" onChange={handleChange} value={form.issue} name="issue" id="issue"
                         placeholder="Enter issue" />
-                    {!isEdit && <AppInput label="File" required type="file" onChange={handleFileChange} name="file" id="file"
+                        {!isEdit && <AppInput label="File" required type="file" onChange={handleFileChange} name="file" id={form._id}
                         placeholder="Select file" />}
+
                     <AppInput label="DOI" required type="text" onChange={handleChange} value={form.doi} name="doi" id="doi"
                         placeholder="Enter DOI" />
                     <AppInput label="Page" required type="text" onChange={handleChange} value={form.page} name="page" id="page"
                         placeholder="Enter page" />
-                    {!isEdit && <AppInput label="Date" required type="date" onChange={handleChange} value={form.date} name="date" id="date" />}
+                    <AppInput label="Date" required type="date" onChange={handleChange} value={form.date} name="date" id="date" />
 
                     <Editor
                         wrapperClassName="editor-wrapper"
@@ -326,6 +341,10 @@ export default function Journals() {
                             options: ['inline', 'list', 'textAlign', 'history', 'fontSize', 'fontFamily',],
                             inline: { inDropdown: true, options: ['bold', 'italic', 'underline'] },
                             list: { inDropdown: true, options: ['unordered', 'ordered'] },
+                            textAlign: { 
+                                inDropdown: false, 
+                                options: ['left', 'center', 'right', 'justify'],
+                            },
                             fontSize: { inDropdown: true, options: [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],},
                             fontFamily: { inDropdown: true, options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],},
                         }}

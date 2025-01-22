@@ -118,10 +118,15 @@ box-shadow: 0 2px 4px #d80c6c;
   padding: 10px;
   max-height: 400px;
   line-height: 1.2;
+  text-align: justify;
 }
 
 .public-DraftStyleDefault-block {
   margin: 5px 0 !important;
+}
+
+.public-DraftStyleDefault-ltr {
+  text-align: inherit !important;
 }
 
 .editor::-webkit-scrollbar {
