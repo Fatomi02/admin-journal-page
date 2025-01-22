@@ -13,11 +13,11 @@ export default function DashboardCard(props) {
                 })}</span>
             </div>
             <div className="border-r border-r-grey flex flex-col gap-2 p-4 xl:py-6 xl:px-4">
-                <span>Total Journal</span>
+                <span>Total Article</span>
                 <span className="text-xl">{props.data}</span>
             </div>
             <div className="flex flex-col gap-2 p-4 xl:py-6 xl:px-4">
-                <span>Total recently added journal</span>
+                <span>Total recently added article</span>
                 <span className="text-xl">{props.recentData}</span>
             </div>
         </div>

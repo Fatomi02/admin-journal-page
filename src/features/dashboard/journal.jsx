@@ -15,7 +15,6 @@ import { convertToRaw } from 'draft-js';
 import { toast } from "react-toastify";
 
 export default function Journals() {
-    const [mounted, setMounted] = useState(false);
     const [journals, setJournals] = useState([]);
     const [isEdit, setIsEdit] = useState(false);
     const [isView, setIsView] = useState(false);
@@ -28,7 +27,9 @@ export default function Journals() {
         title: '',
         volume: 0,
         issue: 0,
-        page: 0,
+        doi: '',
+        page: '',
+        date: '',
         file: null
     });
 
@@ -129,7 +130,9 @@ export default function Journals() {
         formData.append("title", form.title);
         formData.append("volume", form.volume);
         formData.append("issue", form.issue);
+        formData.append("doi", form.doi);
         formData.append("page", form.page);
+        formData.append("date", form.date);
         formData.append("content", content);
 
         // Append file if it exists
@@ -213,7 +216,7 @@ export default function Journals() {
 
     const closeModal = () => {
         setIsModalOpen(false)
-        setForm({ title: '', volume: 0, issue: 0, page: 0, file: null });
+        setForm({ title: '', volume: 0, issue: 0, doi: '', page: '', date: '', file: null });
         setEditorState(EditorState.createEmpty());
         setIsEdit(false)
         setIsView(false)
@@ -228,7 +231,7 @@ export default function Journals() {
                 <span className="text-lg">All Journals</span>
                 <AppBtn onClick={() => setIsModalOpen(true)} variant="primary">
                     <img src={add} alt="add" />
-                    Add new journal
+                    Add Article
                 </AppBtn>
             </div>
             <div className="flex bg-white big_card">
@@ -308,8 +311,11 @@ export default function Journals() {
                         placeholder="Enter issue" />
                     {!isEdit && <AppInput label="File" required type="file" onChange={handleFileChange} name="file" id="file"
                         placeholder="Select file" />}
+                    <AppInput label="DOI" required type="text" onChange={handleChange} value={form.doi} name="doi" id="doi"
+                        placeholder="Enter DOI" />
                     <AppInput label="Page" required type="text" onChange={handleChange} value={form.page} name="page" id="page"
                         placeholder="Enter page" />
+                    {!isEdit && <AppInput label="Date" required type="date" onChange={handleChange} value={form.date} name="date" id="date" />}
 
                     <Editor
                         wrapperClassName="editor-wrapper"
@@ -326,7 +332,7 @@ export default function Journals() {
                     />
                     <div className="w-full mt-10 flex gap-3 justify-end">
                         <AppBtn type="button" onClick={closeModal} variant='danger'>Close</AppBtn>
-                        <AppBtn isLoading={isLoading} type="submit" variant='primary'>{isEdit ? 'Update Journal' : 'Publish Journal'}</AppBtn>
+                        <AppBtn isLoading={isLoading} type="submit" variant='primary'>{isEdit ? 'Update Article' : 'Publish Article'}</AppBtn>
                     </div>
                 </form>
             </Modal>
@@ -343,13 +349,13 @@ export default function Journals() {
                 </div>
             </Modal>
             <Modal isOpen={isView}>
-                <div className="lg:h-[80vh] overflow-y-scroll h-full w-full lg:w-[800px] lg:rounded-lg bg-white px-4 py-6 flex flex-col gap-6">
+                <div className="lg:h-[60vh] overflow-y-scroll h-full w-full lg:w-[800px] lg:rounded-lg bg-white px-4 py-6 flex flex-col gap-6">
                     <h2 className="text-xl font-medium text-primary">Journal Details</h2>
                     <div className="flex flex-col gap-1">
                         <h2 className="text-primary">Title</h2>
                         <span className="capitalize">{form.title}</span>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                         <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Volume</h2>
                             <span>{form.volume}</span>
@@ -357,6 +363,10 @@ export default function Journals() {
                         <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Issue</h2>
                             <span className="capitalize">{form.issue}</span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <h2 className="text-primary">DOI</h2>
+                            <span className="capitalize">{form.doi}</span>
                         </div>
                         <div className="flex flex-col gap-1">
                             <h2 className="text-primary">Date</h2>

@@ -44,7 +44,7 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 gap-4">
                 <div className="px-4 py-2 flex flex-col gap-4 bg-white big_card">
                     <div className="flex justify-between items-center">
-                        <h2>Recent Added Journals</h2>
+                        <h2>Recent Added Article</h2>
                         <button onClick={() => routeTo('/journals')} className="text-blue p-2 hover:opacity-80">
                             View all {">"}
                         </button>
